@@ -4,8 +4,8 @@ const port = process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const cors = require("cors");
 //middleware
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 const uri =
   "mongodb+srv://Assignment-10:FflOQVyvASuZWH2m@cluster0.pnxdm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -51,6 +51,29 @@ async function run() {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
       const result = await crowdcubeCollection.findOne(query);
+      res.send(result);
+    });
+    app.put("/crowd/:id", async (req, res) => {
+      const id = req.params.id;
+      const user = req.body;
+      console.log(user);
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedUser = {
+        $set: {
+          title: user.title,
+          type: user.type,
+          minDonation: user.minDonation,
+          image: user.image,
+          deadline: user.deadline,
+          description: user.description,
+        },
+      };
+      const result = await crowdcubeCollection.updateOne(
+        filter,
+        options,
+        updatedUser
+      );
       res.send(result);
     });
 
