@@ -38,17 +38,6 @@ async function run() {
       const result = await crowdcubeCollection.find().toArray();
       res.send(result);
     });
-    // app.get("/campaign/:id", async (req, res) => {
-    //   const id = req.params.id;
-    //   const query = { _id: new ObjectId(id) };
-    //   try {
-    //     const result = await crowdcubeCollection.findOne(query);
-    //     res.send(result);
-    //   } catch (error) {
-    //     res.status(500).send({ message: "Failed to fetch campaign", error });
-    //   }
-    // });
-
     //my campaign
     app.get("/myCampaign", async (req, res) => {
       const result = await crowdcubeCollection.find().toArray();
